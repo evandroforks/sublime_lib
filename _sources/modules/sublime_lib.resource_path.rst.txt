@@ -1,0 +1,6 @@
+sublime\_lib.resource\_path module
+==================================
+
+.. automodule:: sublime_lib.resource_path
+    :members:
+    :no-special-members:

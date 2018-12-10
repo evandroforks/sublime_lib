@@ -1,0 +1,6 @@
+sublime\_lib.show\_selection\_panel module
+==========================================
+
+.. automodule:: sublime_lib.show_selection_panel
+    :members:
+    :no-special-members:

@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sublime_lib.show_selection_panel module &mdash; sublime_lib  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sublime_lib.syntax module" href="sublime_lib.syntax.html" />
+    <link rel="prev" title="sublime_lib.settings_dict module" href="sublime_lib.settings_dict.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sublime_lib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.encodings.html">sublime_lib.encodings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.flags.html">sublime_lib.flags module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.output_panel.html">sublime_lib.output_panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.resource_path.html">sublime_lib.resource_path module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.settings_dict.html">sublime_lib.settings_dict module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">sublime_lib.show_selection_panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.syntax.html">sublime_lib.syntax module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.view_stream.html">sublime_lib.view_stream module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.view_utils.html">sublime_lib.view_utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.window_utils.html">sublime_lib.window_utils module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sublime_lib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>sublime_lib.show_selection_panel module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/sublime_lib.show_selection_panel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sublime_lib.show_selection_panel">
+<span id="sublime-lib-show-selection-panel-module"></span><h1>sublime_lib.show_selection_panel module<a class="headerlink" href="#module-sublime_lib.show_selection_panel" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="sublime_lib.show_selection_panel.show_selection_panel">
+<code class="descclassname">sublime_lib.show_selection_panel.</code><code class="descname">show_selection_panel</code><span class="sig-paren">(</span><em>window</em>, <em>items</em>, <em>*</em>, <em>flags=0</em>, <em>labels=&lt;object object&gt;</em>, <em>selected=&lt;object object&gt;</em>, <em>on_select=None</em>, <em>on_cancel=None</em>, <em>on_highlight=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.show_selection_panel.show_selection_panel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a quick panel in the given window to select an item from a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window</strong> – The <code class="xref py py-class docutils literal notranslate"><span class="pre">sublime.Window</span></code> in which to show the panel.</p></li>
+<li><p><strong>items</strong> – A nonempty <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of items to choose from.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Optional keyword arguments:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flags</strong> – A bitwise OR of <code class="xref py py-const docutils literal notranslate"><span class="pre">sublime.MONOSPACE_FONT</span></code> and
+<code class="xref py py-const docutils literal notranslate"><span class="pre">sublime.KEEP_OPEN_ON_FOCUS_LOST</span></code>.</p></li>
+<li><p><strong>labels</strong> – <p>Either a list of labels or
+a function taking elements of <cite>items</cite> to labels.
+If <cite>labels</cite> is not given, it will default to <cite>items</cite>.</p>
+<p>Every label must be a single item
+(a string or convertible with <code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code>)
+or a <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Sequence</span></code></a> of items
+(such as a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>).
+In the latter case,
+each entry in the quick panel will show multiple rows.</p>
+</p></li>
+<li><p><strong>selected</strong> – The value in <cite>items</cite> that will be initially selected.
+If <cite>selected</cite> is not given, no value will be initially selected.</p></li>
+<li><p><strong>on_select</strong> – A callback accepting a value from <cite>items</cite>
+to be invoked when the user chooses an item.</p></li>
+<li><p><strong>on_cancel</strong> – A callback that will be invoked with no arguments
+if the user closes the panel without choosing an item.</p></li>
+<li><p><strong>on_highlight</strong> – A callback accepting a value from <cite>items</cite> to be
+invoked every time the user changes the highlighted item in the panel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>items</cite> is empty.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>selected</cite> is given and the value is not in <cite>items</cite>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if some labels are sequences but not others
+or if labels are sequences of inconsistent length.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sublime_lib.syntax.html" class="btn btn-neutral float-right" title="sublime_lib.syntax module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sublime_lib.settings_dict.html" class="btn btn-neutral" title="sublime_lib.settings_dict module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Thomas Smith
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

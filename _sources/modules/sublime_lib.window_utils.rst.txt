@@ -1,0 +1,6 @@
+sublime\_lib.window\_utils module
+=================================
+
+.. automodule:: sublime_lib.window_utils
+    :members:
+    :no-special-members:

@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sublime_lib.resource_path module &mdash; sublime_lib  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sublime_lib.settings_dict module" href="sublime_lib.settings_dict.html" />
+    <link rel="prev" title="sublime_lib.output_panel module" href="sublime_lib.output_panel.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sublime_lib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.encodings.html">sublime_lib.encodings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.flags.html">sublime_lib.flags module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.output_panel.html">sublime_lib.output_panel module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">sublime_lib.resource_path module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.settings_dict.html">sublime_lib.settings_dict module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.show_selection_panel.html">sublime_lib.show_selection_panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.syntax.html">sublime_lib.syntax module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.view_stream.html">sublime_lib.view_stream module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.view_utils.html">sublime_lib.view_utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.window_utils.html">sublime_lib.window_utils module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sublime_lib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>sublime_lib.resource_path module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/sublime_lib.resource_path.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sublime_lib.resource_path">
+<span id="sublime-lib-resource-path-module"></span><h1>sublime_lib.resource_path module<a class="headerlink" href="#module-sublime_lib.resource_path" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sublime_lib.resource_path.ResourcePath">
+<em class="property">class </em><code class="descclassname">sublime_lib.resource_path.</code><code class="descname">ResourcePath</code><span class="sig-paren">(</span><em>*pathsegments</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>A pathlib-inspired representation of a Sublime Text resource path.</p>
+<p>Resource paths are similar to filesystem paths in many ways,
+yet different in other ways.
+Many features of <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a> objects
+are not implemented by <a class="reference internal" href="#sublime_lib.resource_path.ResourcePath" title="sublime_lib.resource_path.ResourcePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePath</span></code></a>,
+and other features may have differerent interpretations.</p>
+<p>A resource path consists of one or more parts
+separated by forward slashes (regardless of platform).
+The first part is the root.
+At the present time, the only roots that Sublime uses are
+<code class="docutils literal notranslate"><span class="pre">'Packages'</span></code> and <code class="docutils literal notranslate"><span class="pre">'Caches'</span></code>.
+Resource paths are always absolute;
+dots in resource paths have no special meaning.</p>
+<p><a class="reference internal" href="#sublime_lib.resource_path.ResourcePath" title="sublime_lib.resource_path.ResourcePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePath</span></code></a> objects are immutable and hashable.
+The forward slash operator is a shorthand for <a class="reference internal" href="#sublime_lib.resource_path.ResourcePath.joinpath" title="sublime_lib.resource_path.ResourcePath.joinpath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">joinpath()</span></code></a>.
+The string representation of a <a class="reference internal" href="#sublime_lib.resource_path.ResourcePath" title="sublime_lib.resource_path.ResourcePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePath</span></code></a>
+is the raw resource path in the form that Sublime Text uses.</p>
+<p>Some methods accept glob patterns as arguments.
+Glob patterns are interpreted as in pathlib.
+Recursive globs (**) are always allowed, even in <a class="reference internal" href="#sublime_lib.resource_path.ResourcePath.match" title="sublime_lib.resource_path.ResourcePath.match"><code class="xref py py-meth docutils literal notranslate"><span class="pre">match()</span></code></a>.
+Leading slashes are not matched literally.
+A pattern with a leading slash must match the entire path
+and not merely a suffix of the path.</p>
+<dl class="classmethod">
+<dt id="sublime_lib.resource_path.ResourcePath.glob_resources">
+<em class="property">classmethod </em><code class="descname">glob_resources</code><span class="sig-paren">(</span><em>pattern</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.glob_resources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all resources that match the given pattern
+and return them as <a class="reference internal" href="#sublime_lib.resource_path.ResourcePath" title="sublime_lib.resource_path.ResourcePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePath</span></code></a> objects.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sublime_lib.resource_path.ResourcePath.from_file_path">
+<em class="property">classmethod </em><code class="descname">from_file_path</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.from_file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#sublime_lib.resource_path.ResourcePath" title="sublime_lib.resource_path.ResourcePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePath</span></code></a> corresponding to the given file path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if the given file path does not correspond to</p>
+</dd>
+</dl>
+<p>any resource path.
+:raise ValueError: if the given file path is relative.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.parts">
+<code class="descname">parts</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple giving access to the path’s various components.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.parent">
+<code class="descname">parent</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The logical parent of the path. A root path is its own parent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.parents">
+<code class="descname">parents</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.parents" title="Permalink to this definition">¶</a></dt>
+<dd><p>An immutable sequence providing access to the path’s logical ancestors.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.name">
+<code class="descname">name</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the final path component.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.suffix">
+<code class="descname">suffix</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The final component’s last suffix, if any.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.suffixes">
+<code class="descname">suffixes</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.suffixes" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the final component’s suffixes, if any.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.stem">
+<code class="descname">stem</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.stem" title="Permalink to this definition">¶</a></dt>
+<dd><p>The final path component, minus its last suffix.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.root">
+<code class="descname">root</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The first path component (usually <code class="docutils literal notranslate"><span class="pre">'Packages'</span></code> or <code class="docutils literal notranslate"><span class="pre">'Cache'</span></code>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sublime_lib.resource_path.ResourcePath.package">
+<code class="descname">package</code><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.package" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the package the path is within,
+or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the path is a root path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.match">
+<code class="descname">match</code><span class="sig-paren">(</span><em>pattern</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if this path matches the given glob pattern,
+or <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>pattern</cite> is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.joinpath">
+<code class="descname">joinpath</code><span class="sig-paren">(</span><em>*other</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.joinpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine this path with all of the given strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.with_name">
+<code class="descname">with_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.with_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new path with the name changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.with_suffix">
+<code class="descname">with_suffix</code><span class="sig-paren">(</span><em>suffix</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.with_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new path with the suffix changed.</p>
+<p>If the original path doesn’t have a suffix, the new suffix is appended
+instead. If the new suffix is an empty string, the original suffix is
+removed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.file_path">
+<code class="descname">file_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> object representing a filesystem path
+inside one of Sublime’s data directories.</p>
+<p>Even if there is a resource at this path,
+there may not be a file at that filesystem path.
+The resource could be in a default package or an installed package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if the path’s root is not used by Sublime.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.exists">
+<code class="descname">exists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if there is a resource at this path,
+or <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<p>The resource system does not keep track of directories.
+Even if a path does not point to a resource,
+there may be resources beneath that path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.read_text">
+<code class="descname">read_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.read_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the resource at this path and return it as text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.7)"><strong>FileNotFoundError</strong></a> – if there is no resource at this path.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#UnicodeDecodeError" title="(in Python v3.7)"><strong>UnicodeDecodeError</strong></a> – if the resource cannot be decoded as UTF-8.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.read_bytes">
+<code class="descname">read_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.read_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the resource at this path and return it as bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.7)"><strong>FileNotFoundError</strong></a> – if there is no resource at this path.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.glob">
+<code class="descname">glob</code><span class="sig-paren">(</span><em>pattern</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.glob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Glob the given pattern at this path, returning all matching resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>pattern</cite> is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.rglob">
+<code class="descname">rglob</code><span class="sig-paren">(</span><em>pattern</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.rglob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shorthand for <code class="docutils literal notranslate"><span class="pre">path.glob('**/'</span> <span class="pre">+</span> <span class="pre">pattern)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>pattern</cite> is invalid.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><strong>NotImplementedError</strong></a> – if <cite>pattern</cite> begins with a slash.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sublime_lib.resource_path.ResourcePath.children">
+<code class="descname">children</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.resource_path.ResourcePath.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of paths that are direct children of this path
+and point to a resource at or beneath that path.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sublime_lib.settings_dict.html" class="btn btn-neutral float-right" title="sublime_lib.settings_dict module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sublime_lib.output_panel.html" class="btn btn-neutral" title="sublime_lib.output_panel module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Thomas Smith
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

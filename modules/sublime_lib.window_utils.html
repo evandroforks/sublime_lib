@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sublime_lib.window_utils module &mdash; sublime_lib  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="sublime_lib.view_utils module" href="sublime_lib.view_utils.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sublime_lib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.encodings.html">sublime_lib.encodings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.flags.html">sublime_lib.flags module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.output_panel.html">sublime_lib.output_panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.resource_path.html">sublime_lib.resource_path module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.settings_dict.html">sublime_lib.settings_dict module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.show_selection_panel.html">sublime_lib.show_selection_panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.syntax.html">sublime_lib.syntax module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.view_stream.html">sublime_lib.view_stream module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sublime_lib.view_utils.html">sublime_lib.view_utils module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">sublime_lib.window_utils module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sublime_lib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>sublime_lib.window_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/sublime_lib.window_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sublime_lib.window_utils">
+<span id="sublime-lib-window-utils-module"></span><h1>sublime_lib.window_utils module<a class="headerlink" href="#module-sublime_lib.window_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="sublime_lib.window_utils.new_window">
+<code class="descclassname">sublime_lib.window_utils.</code><code class="descname">new_window</code><span class="sig-paren">(</span><em>*</em>, <em>menu_visible=None</em>, <em>sidebar_visible=None</em>, <em>tabs_visible=None</em>, <em>minimap_visible=None</em>, <em>status_bar_visible=None</em>, <em>project_data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.window_utils.new_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a new window, returning the <code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code> object.</p>
+<p>This function takes many optional keyword arguments:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>menu_visible</strong> – Show the menubar.
+New windows show the menubar by default.
+On the Mac OS, this argument has no effect.</p></li>
+<li><p><strong>sidebar_visible</strong> – Show the sidebar.
+The sidebar will only be shown
+if the window’s project data has at least one folder.</p></li>
+<li><p><strong>tabs_visible</strong> – Show the tab bar.
+If the tab bar is hidden,
+it will not be shown even if there are multiple tabs.</p></li>
+<li><p><strong>minimap_visible</strong> – Show the minimap.</p></li>
+<li><p><strong>status_bar_visible</strong> – Show the status bar.</p></li>
+<li><p><strong>project_data</strong> – Project data for the window, such as <cite>folders</cite>.
+See the <cite>.sublime_project</cite> documentation for details.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This function currently does not provide a way
+to associate a window with a <cite>.sublime_project</cite> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.7)"><strong>RuntimeError</strong></a> – if the window is not created for any reason.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sublime_lib.window_utils.close_window">
+<code class="descclassname">sublime_lib.window_utils.</code><code class="descname">close_window</code><span class="sig-paren">(</span><em>window</em>, <em>*</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#sublime_lib.window_utils.close_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the given window, discarding unsaved changes if <cite>force</cite> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if any view in the window has unsaved changes
+and <cite>force</cite> is not <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="sublime_lib.view_utils.html" class="btn btn-neutral" title="sublime_lib.view_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Thomas Smith
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
