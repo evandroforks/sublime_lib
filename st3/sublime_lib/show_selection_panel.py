@@ -1,7 +1,13 @@
-from ._util.collections import is_sequence_not_str, isiterable
+import sublime
+
+from ._util.collections import isiterable
 from ._util.named_value import NamedValue
 from .flags import QuickPanelOption
+from collections.abc import Sequence
 
+from ._compat.typing import Any, Callable, List, Optional, TypeVar, Union, Sequence as _Sequence
+
+_ItemType = TypeVar('_ItemType')
 
 __all__ = ['show_selection_panel', 'NO_SELECTION']
 
@@ -10,16 +16,16 @@ NO_SELECTION = NamedValue('NO_SELECTION')
 
 
 def show_selection_panel(
-    window,
-    items,
+    window: sublime.Window,
+    items: _Sequence[_ItemType],
     *,
-    flags=0,
-    labels=None,
-    selected=NO_SELECTION,
-    on_select=None,
-    on_cancel=None,
-    on_highlight=None
-):
+    flags: Any = 0,
+    labels: Union[_Sequence[object], Callable[[_ItemType], object]] = None,
+    selected: Union[NamedValue, _ItemType] = NO_SELECTION,
+    on_select: Optional[Callable[[_ItemType], object]] = None,
+    on_cancel: Optional[Callable[[], object]] = None,
+    on_highlight: Optional[Callable[[_ItemType], object]] = None
+) -> None:
     """Open a quick panel in the given window to select an item from a list.
 
     :argument window: The :class:`sublime.Window` in which to show the panel.
@@ -64,13 +70,16 @@ def show_selection_panel(
 
     :raise ValueError: if `selected` is given and the value is not in `items`.
 
-    :raise ValueError: if some labels are sequences but not others
-        or if labels are sequences of inconsistent length.
-
     :raise ValueError: if `flags` cannot be converted
         to :class:`sublime_lib.flags.QuickPanelOption`.
 
-    ..  versionadded:: 1.2
+    .. versionadded:: 1.2
+
+    .. versionchanged:: 1.3
+        `labels` can be a mixture of strings and string sequences of uneven length.
+
+        `flags` can be any value or values
+        convertible to :class:`~sublime_lib.flags.QuickPanelOption`.
     """
     if len(items) == 0:
         raise ValueError("The items parameter must contain at least one item.")
@@ -82,19 +91,17 @@ def show_selection_panel(
     elif len(items) != len(labels):
         raise ValueError("The lengths of `items` and `labels` must match.")
 
-    if any(map(is_sequence_not_str, labels)):
-        if not all(map(is_sequence_not_str, labels)):
-            raise ValueError("Labels must be all strings or all lists.")
+    def normalize_label(label: object) -> List[str]:
+        if isinstance(label, Sequence) and not isinstance(label, str):
+            return list(map(str, label))
+        else:
+            return [str(label)]
 
-        if len(set(map(len, labels))) != 1:
-            raise ValueError(
-                "If labels are lists, they must all have the same number of elements.")
+    label_strings = list(map(normalize_label, labels))
+    max_len = max(map(len, label_strings))
+    label_strings = [rows + [''] * (max_len - len(rows)) for rows in label_strings]
 
-        labels = list(map(lambda label: list(map(str, label)), labels))
-    else:
-        labels = list(map(str, labels))
-
-    def on_done(index):
+    def on_done(index: int) -> None:
         if index == -1:
             if on_cancel:
                 on_cancel()
@@ -118,7 +125,7 @@ def show_selection_panel(
     # The signature in the API docs is wrong.
     # See https://github.com/SublimeTextIssues/Core/issues/2290
     window.show_quick_panel(
-        items=labels,
+        items=label_strings,
         on_select=on_done,
         flags=flags,
         selected_index=selected_index,

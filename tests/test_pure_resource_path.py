@@ -202,6 +202,7 @@ class TestPureResourcePath(TestCase):
         self.assertFalse(path.match('Foo'))
         self.assertFalse(path.match('Packages/*/*/bar'))
         self.assertFalse(path.match('/Foo/bar'))
+        self.assertFalse(path.match('ar'))
 
     def test_joinpath(self):
         self.assertEqual(
@@ -215,6 +216,28 @@ class TestPureResourcePath(TestCase):
             ResourcePath("Packages/Foo/bar/baz/xyzzy")
         )
 
+    def test_relative_to(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/baz/bar.py").relative_to(
+                ResourcePath("Packages/Foo")
+            ),
+            ('baz', 'bar.py')
+        )
+
+    def test_relative_to_same(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo").relative_to(
+                ResourcePath("Packages/Foo")
+            ),
+            ()
+        )
+
+    def test_relative_to_error(self):
+        with self.assertRaises(ValueError):
+            ResourcePath("Packages/Foo").relative_to(
+                ResourcePath("Packages/Bar")
+            )
+
     def test_with_name(self):
         self.assertEqual(
             ResourcePath("Packages/Foo/bar.py").with_name('baz.js'),
@@ -225,6 +248,78 @@ class TestPureResourcePath(TestCase):
         self.assertEqual(
             ResourcePath("Packages").with_name('Cache'),
             ResourcePath("Cache")
+        )
+
+    def test_add_suffix(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar").add_suffix('.py'),
+            ResourcePath("Packages/Foo/bar.py")
+        )
+
+    def test_remove_suffix(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.py").remove_suffix(),
+            ResourcePath("Packages/Foo/bar")
+        )
+
+    def test_remove_suffix_none(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar").remove_suffix(must_remove=False),
+            ResourcePath("Packages/Foo/bar")
+        )
+
+    def test_remove_suffix_none_error(self):
+        with self.assertRaises(ValueError):
+            ResourcePath("Packages/Foo/bar").remove_suffix()
+
+    def test_remove_suffix_specified(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.py").remove_suffix('.py'),
+            ResourcePath("Packages/Foo/bar")
+        )
+
+    def test_remove_suffix_specified_no_match(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.py").remove_suffix('.zip', must_remove=False),
+            ResourcePath("Packages/Foo/bar.py")
+        )
+
+    def test_remove_suffix_specified_no_match_error(self):
+        with self.assertRaises(ValueError):
+            ResourcePath("Packages/Foo/bar.py").remove_suffix('.zip')
+
+    def test_remove_suffix_specified_no_dot(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.py").remove_suffix('r.py'),
+            ResourcePath("Packages/Foo/ba")
+        )
+
+    def test_remove_suffix_specified_entire_name(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.py").remove_suffix('bar.py', must_remove=False),
+            ResourcePath("Packages/Foo/bar.py")
+        )
+
+    def test_remove_suffix_specified_entire_name_error(self):
+        with self.assertRaises(ValueError):
+            ResourcePath("Packages/Foo/bar.py").remove_suffix('bar.py')
+
+    def test_remove_suffix_multiple(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.py").remove_suffix(['.zip', '.py']),
+            ResourcePath("Packages/Foo/bar")
+        )
+
+    def test_remove_suffix_multiple_matches(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.tar.gz").remove_suffix(['.tar.gz', '.gz']),
+            ResourcePath("Packages/Foo/bar")
+        )
+
+    def test_remove_suffix_multiple_matches_backward(self):
+        self.assertEqual(
+            ResourcePath("Packages/Foo/bar.tar.gz").remove_suffix(['.gz', '.tar.gz']),
+            ResourcePath("Packages/Foo/bar")
         )
 
     def test_with_suffix(self):

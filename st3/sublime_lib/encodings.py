@@ -3,27 +3,43 @@ from codecs import lookup
 __all__ = ['from_sublime', 'to_sublime']
 
 
-def from_sublime(name):
+def from_sublime(name: str) -> str:
     """Translate `name` from a Sublime encoding name to a standard Python encoding name.
+
+    :raise ValueError: if `name` is not a Sublime encoding.
 
     .. code-block:: python
 
        >>> from_sublime("Western (Windows 1252)")
        "cp1252"
+
+    .. versionchanged:: 1.3
+        Raise :exc:`ValueError` if `name` is not a Sublime encoding.
     """
 
-    return SUBLIME_TO_STANDARD.get(name, None)
+    try:
+        return SUBLIME_TO_STANDARD[name]
+    except KeyError:
+        raise ValueError("Unknown Sublime encoding {!r}.".format(name)) from None
 
 
-def to_sublime(name):
+def to_sublime(name: str) -> str:
     """Translate `name` from a standard Python encoding name to a Sublime encoding name.
+
+    :raise ValueError: if `name` is not a Python encoding.
 
     .. code-block:: python
 
        >>> to_sublime("cp1252")
        "Western (Windows 1252)"
+
+    .. versionchanged:: 1.3
+        Raise :exc:`ValueError` if `name` is not a Python encoding.
     """
-    return STANDARD_TO_SUBLIME.get(lookup(name).name, None)
+    try:
+        return STANDARD_TO_SUBLIME[lookup(name).name]
+    except LookupError:
+        raise ValueError("Unknown Python encoding {!r}.".format(name)) from None
 
 
 SUBLIME_TO_STANDARD = {  # noqa: E121
@@ -46,6 +62,7 @@ SUBLIME_TO_STANDARD = {  # noqa: E121
     "Celtic (ISO 8859-14)": "iso8859-14",
     "Central European (Windows 1250)": "cp1250",
     "Central European (ISO 8859-2)": "iso8859-2",
+    "Central European (Mac)": "mac-latin2",
     "Cyrillic (Windows 1251)": "cp1251",
     "Cyrillic (Windows 866)": "cp866",
     "Cyrillic (ISO 8859-5)": "iso8859-5",

@@ -1,18 +1,21 @@
 import sublime
 
+from ._compat.typing import Optional
+
+from .view_utils import _temporarily_scratch_unsaved_views
 
 __all__ = ['new_window', 'close_window']
 
 
 def new_window(
     *,
-    menu_visible=None,
-    sidebar_visible=None,
-    tabs_visible=None,
-    minimap_visible=None,
-    status_bar_visible=None,
-    project_data=None
-):
+    menu_visible: Optional[bool] = None,
+    sidebar_visible: Optional[bool] = None,
+    tabs_visible: Optional[bool] = None,
+    minimap_visible: Optional[bool] = None,
+    status_bar_visible: Optional[bool] = None,
+    project_data: Optional[dict] = None
+) -> sublime.Window:
     """Open a new window, returning the :class:`~sublime.Window` object.
 
     This function takes many optional keyword arguments:
@@ -79,7 +82,7 @@ def new_window(
     return window
 
 
-def close_window(window, *, force=False):
+def close_window(window: sublime.Window, *, force: bool = False) -> None:
     """Close the given window, discarding unsaved changes if `force` is ``True``.
 
     :raise ValueError: if any view in the window has unsaved changes
@@ -87,11 +90,16 @@ def close_window(window, *, force=False):
 
     .. versionadded:: 1.2
     """
-    for view in window.views():
-        if view.is_dirty() and not view.is_scratch():
-            if force:
-                view.set_scratch(True)
-            else:
-                raise ValueError('A view has unsaved changes.')
+    unsaved = [
+        view for view in window.views()
+        if view.is_dirty() and not view.is_scratch()
+    ]
 
-    window.run_command('close_window')
+    if unsaved:
+        if not force:
+            raise ValueError('A view has unsaved changes.')
+
+        with _temporarily_scratch_unsaved_views(unsaved):
+            window.run_command('close_window')
+    else:
+        window.run_command('close_window')

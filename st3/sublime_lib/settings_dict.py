@@ -2,10 +2,15 @@ import sublime
 
 from uuid import uuid4
 from functools import partial
+from collections.abc import Mapping
 
-from ._util.collections import get_selector, ismapping
+from ._util.collections import get_selector
 from ._util.named_value import NamedValue
 
+from ._compat.typing import Any, Callable, Iterable, NoReturn, TypeVar, Union, Mapping as _Mapping
+
+_Default = TypeVar('_Default')
+Value = Union[bool, int, float, str, list, dict, None]
 
 __all__ = ['SettingsDict', 'NamedSettingsDict']
 
@@ -37,14 +42,24 @@ class SettingsDict():
 
     NO_DEFAULT = _NO_DEFAULT
 
-    def __init__(self, settings):
+    def __init__(self, settings: sublime.Settings):
         self.settings = settings
 
-    def __iter__(self):
+    def __iter__(self) -> NoReturn:
         """Raise NotImplementedError."""
         raise NotImplementedError()
 
-    def __getitem__(self, key):
+    def __eq__(self, other: object) -> bool:
+        """Return ``True`` if `self` and `other` are of the same type
+        and refer to the same underlying settings data.
+        """
+        return (
+            type(self) == type(other)
+            and isinstance(other, SettingsDict)
+            and self.settings.settings_id == other.settings.settings_id
+        )
+
+    def __getitem__(self, key: str) -> Value:
         """Return the setting named `key`.
 
         If a subclass of :class:`SettingsDict` defines a method :meth:`__missing__`
@@ -64,14 +79,14 @@ class SettingsDict():
         else:
             return self.__missing__(key)
 
-    def __missing__(self, key):
+    def __missing__(self, key: str) -> Value:
         raise KeyError(key)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value: Value) -> None:
         """Set `self[key]` to `value`."""
         self.settings.set(key, value)
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: str) -> None:
         """Remove `self[key]` from `self`.
 
         :raise KeyError: if there us no setting with the given `key`.
@@ -81,18 +96,20 @@ class SettingsDict():
         else:
             raise KeyError(key)
 
-    def __contains__(self, item):
+    def __contains__(self, item: str) -> bool:
         """Return ``True`` if `self` has a setting named `key`, else ``False``."""
         return self.settings.has(item)
 
-    def get(self, key, default=None):
+    def get(self, key: str, default: _Default = None) -> Union[Value, _Default]:
         """Return the value for `key` if `key` is in the dictionary, or `default` otherwise.
 
         If `default` is not given, it defaults to ``None``,
         so that this method never raises :exc:`KeyError`."""
         return self.settings.get(key, default)
 
-    def pop(self, key, default=_NO_DEFAULT):
+    def pop(
+        self, key: str, default: Union[_Default, NamedValue] = _NO_DEFAULT
+    ) -> Union[Value, _Default]:
         """Remove the setting `self[key]` and return its value or `default`.
 
         :raise KeyError: if `key` is not in the dictionary
@@ -108,9 +125,9 @@ class SettingsDict():
         elif default is _NO_DEFAULT:
             raise KeyError(key)
         else:
-            return default
+            return default  # type: ignore
 
-    def setdefault(self, key, default=None):
+    def setdefault(self, key: str, default: Value = None) -> Value:
         """Set `self[key]` to `default` if it wasn't already defined and return `self[key]`.
         """
         if key in self:
@@ -119,7 +136,11 @@ class SettingsDict():
             self[key] = default
             return default
 
-    def update(self, other=[], **kwargs):
+    def update(
+        self,
+        other: Union[_Mapping[str, Value], Iterable[Iterable[str]]] = [],
+        **kwargs: Value
+    ) -> None:
         """Update the dictionary with the key/value pairs from `other`,
         overwriting existing keys.
 
@@ -129,8 +150,8 @@ class SettingsDict():
         the dictionary is then updated with those key/value pairs:
         ``self.update(red=1, blue=2)``.
         """
-        if ismapping(other):
-            other = other.items()
+        if isinstance(other, Mapping):
+            other = other.items()  # type: ignore
 
         for key, value in other:
             self[key] = value
@@ -138,7 +159,9 @@ class SettingsDict():
         for key, value in kwargs.items():
             self[key] = value
 
-    def subscribe(self, selector, callback, default_value=None):
+    def subscribe(
+        self, selector: Any, callback: Callable, default_value: Any = None
+    ) -> Callable[[], None]:
         """Register a callback to be invoked
         when the value derived from the settings object changes
         and return a function that when invoked will unregister the callback.
@@ -150,6 +173,12 @@ class SettingsDict():
         then ``self.get(selector, default_value)`` is passed.
         Otherwise, ``projection(self, selector)`` is passed.
 
+        Changes in the selected value are detected
+        by comparing the last known value to the current value
+        using the equality operator.
+        If you use a selector function,
+        the result must be equatable and should not be mutated.
+
         `callback` should accept two arguments:
         the new derived value and the previous derived value.
 
@@ -158,15 +187,16 @@ class SettingsDict():
         """
         selector_fn = get_selector(selector)
 
-        previous_value = selector_fn(self)
+        saved_value = selector_fn(self)
 
-        def onchange():
-            nonlocal previous_value
+        def onchange() -> None:
+            nonlocal saved_value
             new_value = selector_fn(self)
 
-            if new_value != previous_value:
+            if new_value != saved_value:
+                previous_value = saved_value
+                saved_value = new_value
                 callback(new_value, previous_value)
-                previous_value = new_value
 
         key = str(uuid4())
         self.settings.add_on_change(key, onchange)
@@ -177,12 +207,12 @@ class NamedSettingsDict(SettingsDict):
     """Wraps a :class:`sublime.Settings` object corresponding to a `sublime-settings` file."""
 
     @property
-    def file_name(self):
+    def file_name(self) -> str:
         """The name of the sublime-settings files
         associated with the :class:`NamedSettingsDict`."""
         return self.name + '.sublime-settings'
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         """Return a new :class:`NamedSettingsDict` corresponding to the given name."""
 
         if name.endswith('.sublime-settings'):
@@ -192,6 +222,6 @@ class NamedSettingsDict(SettingsDict):
 
         super().__init__(sublime.load_settings(self.file_name))
 
-    def save(self):
+    def save(self) -> None:
         """Flush any in-memory changes to the :class:`NamedSettingsDict` to disk."""
         sublime.save_settings(self.file_name)

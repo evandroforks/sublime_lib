@@ -1,15 +1,25 @@
-import inspect
+import sublime
 
-from .vendor.python.enum import Enum
+import inspect
+from contextlib import contextmanager
+
+from ._compat.enum import Enum
 from ._util.enum import ExtensibleConstructorMeta, construct_with_alternatives
 from .syntax import get_syntax_for_scope
 from .encodings import to_sublime
 
+from ._compat.typing import Any, Optional, Mapping, Iterable, Generator, Type, TypeVar
 
-__all__ = ['LineEnding', 'new_view', 'close_view']
+
+EnumType = TypeVar('EnumType', bound=Enum)
 
 
-def case_insensitive_value(cls, value):
+__all__ = [
+    'LineEnding', 'new_view', 'close_view',
+]
+
+
+def case_insensitive_value(cls: Type[EnumType], value: str) -> Optional[EnumType]:
     return next((
         member for name, member in cls.__members__.items()
         if name.lower() == value.lower()
@@ -39,7 +49,7 @@ class LineEnding(Enum, metaclass=ExtensibleConstructorMeta):
     CR = '\r'
 
 
-def new_view(window, **kwargs):
+def new_view(window: sublime.Window, **kwargs: Any) -> sublime.View:
     """Open a new view in the given `window`, returning the :class:`~sublime.View` object.
 
     This function takes many optional keyword arguments:
@@ -73,6 +83,7 @@ def new_view(window, **kwargs):
         Incompatible with the `scope` option.
 
     :raise ValueError: if both `scope` and `syntax` are specified.
+    :raise ValueError: if `encoding` is not a Python encoding name.
     :raise ValueError: if `line_endings` cannot be converted to :class:`LineEnding`.
 
     ..  versionchanged:: 1.2
@@ -85,7 +96,42 @@ def new_view(window, **kwargs):
     return view
 
 
-def close_view(view, *, force=False):
+@contextmanager
+def _temporarily_scratch_unsaved_views(
+    unsaved_views: Iterable[sublime.View]
+) -> Generator[None, None, None]:
+    buffer_ids = {view.buffer_id() for view in unsaved_views}
+    for view in unsaved_views:
+        view.set_scratch(True)
+
+    try:
+        yield
+    finally:
+        clones = {
+            view.buffer_id(): view
+            for window in sublime.windows()
+            for view in window.views()
+            if view.buffer_id() in buffer_ids
+        }
+        for view in clones.values():
+            view.set_scratch(False)
+
+
+def _clone_view(view: sublime.View) -> sublime.View:
+    window = view.window()
+    if window is None:  # pragma: no cover
+        raise ValueError("View has no window.")
+
+    window.focus_view(view)
+    window.run_command('clone_file')
+    clone = window.active_view()
+    if clone is None:  # pragma: no cover
+        raise RuntimeError("Clone was not created.")
+
+    return clone
+
+
+def close_view(view: sublime.View, *, force: bool = False) -> None:
     """Close the given view, discarding unsaved changes if `force` is ``True``.
 
     If the view is invalid (e.g. already closed), do nothing.
@@ -93,17 +139,22 @@ def close_view(view, *, force=False):
     :raise ValueError: if the view has unsaved changes and `force` is not ``True``.
     :raise ValueError: if the view is not closed for any other reason.
     """
-    if view.is_dirty() and not view.is_scratch():
-        if force:
-            view.set_scratch(True)
-        else:
+    unsaved = view.is_dirty() and not view.is_scratch()
+
+    if unsaved:
+        if not force:
             raise ValueError('The view has unsaved changes.')
 
-    if not view.close():
+        with _temporarily_scratch_unsaved_views([view]):
+            closed = view.close()
+    else:
+        closed = view.close()
+
+    if not closed:
         raise ValueError('The view could not be closed.')
 
 
-def validate_view_options(options):
+def validate_view_options(options: Mapping[str, Any]) -> None:
     unknown = set(options) - VIEW_OPTIONS
     if unknown:
         raise ValueError('Unknown view options: %s.' % ', '.join(list(unknown)))
@@ -116,18 +167,19 @@ def validate_view_options(options):
 
 
 def set_view_options(
-    view, *,
-    name=None,
-    settings=None,
-    read_only=None,
-    scratch=None,
-    overwrite=None,
-    syntax=None,
-    scope=None,
-    encoding=None,
-    content=None,
-    line_endings=None
-):
+    view: sublime.View,
+    *,
+    name: Optional[str] = None,
+    settings: Optional[dict] = None,
+    read_only: Optional[bool] = None,
+    scratch: Optional[bool] = None,
+    overwrite: Optional[bool] = None,
+    syntax: Optional[str] = None,
+    scope: Optional[str] = None,
+    encoding: Optional[str] = None,
+    content: Optional[str] = None,
+    line_endings: Optional[str] = None
+) -> None:
     if name is not None:
         view.set_name(name)
 

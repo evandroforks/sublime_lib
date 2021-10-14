@@ -48,6 +48,16 @@ Syntax utilities
 .. autofunction:: sublime_lib.list_syntaxes
 .. autofunction:: sublime_lib.get_syntax_for_scope
 
+Activity indicator
+------------------
+
+.. autoclass:: sublime_lib.ActivityIndicator
+
+Region manager
+------------------
+
+.. autoclass:: sublime_lib.RegionManager
+
 :mod:`~sublime_lib.encodings` submodule
 ---------------------------------------
 
